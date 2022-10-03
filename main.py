@@ -1,10 +1,11 @@
 from aiogram import executor
 from create_bot import dp, bot
 from data_base import sqlite_bd
+from create_bot import ADMIN_ID
 
 
 async def send_to_admin(message):
-    print('Запуск бота')
+    await bot.send_message(ADMIN_ID, 'Бот BreakingBadHabits запущен.')
     sqlite_bd.sqlite_start()
 
 
