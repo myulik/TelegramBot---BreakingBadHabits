@@ -32,4 +32,4 @@ inlFail.add(InlineKeyboardButton(text="Сдаться", callback_data='failed'))
 
 inlDrop = InlineKeyboardMarkup(row_width=1)
 inlDrop.row(InlineKeyboardButton(text="Да", callback_data='droplogs'),
-             InlineKeyboardButton(text="Нет, не сбрасывать данные", callback_data='nofdasfa'))
+            InlineKeyboardButton(text="Нет, не сбрасывать данные", callback_data='nofdasfa'))
