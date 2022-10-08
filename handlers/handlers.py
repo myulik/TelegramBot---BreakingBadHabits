@@ -8,10 +8,7 @@ from data_base import sqlite_bd as bd
 
 
 async def start(message: Message):
-    await message.answer(text='/active - оставшиеся время\n/info - интересная информация,\
-касаемо вашей привычки, да и вообще зависимости от чего-либо\n/motivate - мотививация, когда особенно тяжело\n/log - \
-завершенные уровни\n/new - новый отказ от привычки', reply_markup=kb_client)
-# нужно сделать меню
+    await message.answer(text='Здравствуйте, введите команду /new.', reply_markup=kb_client)
 
 
 def time_count(dif):
@@ -48,10 +45,11 @@ async def call_extension(callback: CallbackQuery):
     dates = bd.get_habit(callback)
     for i in dates:
         if i[0] in callback.message.text:
+            habit = i[0]
             await bd.update_status(callback['from']['id'], i[0], callback.data)
 
     levels = {0: 1, 1: 3, 2: 7, 3: 14, 4: 21, 5: 30, 6: 90, 7: 180, 8: 365}
-    user_id, habit, dur, level, sec, status = bd.get_data_extension(callback)
+    user_id, habit, dur, level, sec, status = bd.get_data_extension(callback, habit)
     if levels[8] != dur:
         for i in levels:
             if levels[i] == dur:
@@ -68,7 +66,7 @@ async def call_failed(callback: CallbackQuery):
         if i[0] in callback.message.text:
             await bd.update_status(callback['from']['id'], i[0], callback.data)
 
-    await callback.answer(text='СЛАБАК')
+    await callback.answer(text='ПРОВАЛЕНО')
 
 
 async def call_repeat(callback: CallbackQuery):
@@ -119,6 +117,7 @@ async def motivate(message: Message):
 
 
 async def droplogs(message: Message):
+
     await message.answer(text='Вы уверены, что хотите сбросить все логи?', reply_markup=inlDrop)
 
 
@@ -131,7 +130,7 @@ def register_handlers(dp: Dispatcher):
     dp.register_message_handler(start, commands=['start'])
     dp.register_message_handler(active, commands=['active'])
     dp.register_message_handler(motivate, commands=['motivate'])
-    dp.register_message_handler(log, commands=['log'])
+    dp.register_message_handler(log, commands=['logs'])
     dp.register_message_handler(info, commands=['info'])
     dp.register_message_handler(droplogs, commands=['droplogs'])
 

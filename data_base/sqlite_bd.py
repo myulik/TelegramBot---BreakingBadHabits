@@ -29,10 +29,11 @@ def get_data_active(message):
         return cur.fetchall()
 
 
-def get_data_extension(callback):
+def get_data_extension(callback, habit):
     with sq.connect('BBH.db') as base:
         cur = base.cursor()
-        cur.execute("SELECT * FROM users WHERE user_id = ? AND status = ?", [callback['from']['id'], 'COMPLETED+'])
+        cur.execute("SELECT * FROM users WHERE user_id = ? AND status = ? AND \
+        habit ?", [callback['from']['id'], 'COMPLETED+', habit])
         return cur.fetchone()
 
 
