@@ -3,7 +3,7 @@ import time
 
 
 def sqlite_start():
-    with sq.connect('BBH.db') as base:
+    with sq.connect('.Base_data/BBH.db') as base:
         cur = base.cursor()
         if base:
             print('Connecting to DataBase accomplished')
