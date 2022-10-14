@@ -25,13 +25,12 @@ async def active(message: Message):
     for data in dates:
         user_id, habit, dur, level, sec, status = data
         dif = sec + (dur * 24 * 60 * 60) - time.time()
+        dif1 = time.time() - sec
         if dif > 0:
-            day, hour, minute, seconds = time_count(dif)
-            total = dur * 24 * 60 * 60
-            now = int(time.time()) - sec
-            cent = (now * 100) / total
-            text = f'Без {habit} ⏳{int(day)}:{int(hour)}:{int(minute)}:{int(seconds)}\n\
-(Выполнено {round(cent, 3)} % из 100 %)'
+            day, hour, minute, seconds = time_count(dif1)
+            cent = ((int(time.time()) - sec) * 100) / (dur * 24 * 60 * 60)
+            text = f'Без {habit} - уровень {level} - {dur} дней).\nПрошло {int(day)}:{int(hour)}:{int(minute)}:\
+{int(seconds)}.\n(Выполнено {round(cent, 2)} % из 100 %)'
             await message.answer(text=text, reply_markup=inlFail)
         else:
             await bd.update_status(message.from_user.id, habit, 'completed')
@@ -117,7 +116,6 @@ async def motivate(message: Message):
 
 
 async def droplogs(message: Message):
-
     await message.answer(text='Вы уверены, что хотите сбросить все логи?', reply_markup=inlDrop)
 
 
