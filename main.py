@@ -15,6 +15,5 @@ if __name__ == '__main__':
     handlers.register_handlers(dp)
     command_new.register_handlers_new_habit(dp)
 
-    # функция start_polling делает запросы getUpdates, то есть доставляет сообщения
     executor.start_polling(dp, skip_updates=True, on_startup=send_to_admin)
 

@@ -29,7 +29,7 @@ async def active(message: Message):
         if dif > 0:
             day, hour, minute, seconds = time_count(dif1)
             cent = ((int(time.time()) - sec) * 100) / (dur * 24 * 60 * 60)
-            text = f'Без {habit} - уровень {level} - {dur} дней).\nПрошло {int(day)}:{int(hour)}:{int(minute)}:\
+            text = f'Без {habit} - уровень {level}({dur}).\nПрошло {int(day)}:{int(hour)}:{int(minute)}:\
 {int(seconds)}.\n(Выполнено {round(cent, 2)} % из 100 %)'
             await message.answer(text=text, reply_markup=inlFail)
         else:
@@ -107,14 +107,6 @@ async def log(message: Message):
         await message.answer(text='Логов пока нет.')
 
 
-async def info(message: Message):
-    await message.answer(text='В разработке')
-
-
-async def motivate(message: Message):
-    await message.answer(text='В разработке')
-
-
 async def droplogs(message: Message):
     await message.answer(text='Вы уверены, что хотите сбросить все логи?', reply_markup=inlDrop)
 
@@ -127,9 +119,7 @@ async def call_droplogs(callback: CallbackQuery):
 def register_handlers(dp: Dispatcher):
     dp.register_message_handler(start, commands=['start'])
     dp.register_message_handler(active, commands=['active'])
-    dp.register_message_handler(motivate, commands=['motivate'])
     dp.register_message_handler(log, commands=['logs'])
-    dp.register_message_handler(info, commands=['info'])
     dp.register_message_handler(droplogs, commands=['droplogs'])
 
     dp.register_callback_query_handler(call_extension, Text(equals='completed+'))
